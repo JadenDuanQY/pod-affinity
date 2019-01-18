@@ -1,0 +1,48 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: tomcat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tomcat
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      hostname: tomcat
+      dnsPolicy: ClusterFirst
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            labelSelector:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - node1.qyos.com
+                - node7.qyos.com
+#          preferredDuringSchedulingIgnoredDuringExecution:
+#          - weight: 1               //取值范围1-100
+#            preference:
+#              matchExpressions:
+#              - key: another-node-label-key
+#                operator: In
+#                values:
+#                - another-node-label-value
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            labelSelector:
+            - matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - tomcat
+      containers:
+      - name: tomcat
+        image: docker-registry.default.svc:5000/openshift/tomcat:8
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
