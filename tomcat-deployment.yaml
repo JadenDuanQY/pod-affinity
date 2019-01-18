@@ -40,7 +40,7 @@ spec:
                 operator: In
                 values:
                 - tomcat
-            topologKey: kubernetes.io/hostname
+            topologyKey: kubernetes.io/hostname
       containers:
       - name: tomcat
         image: docker-registry.default.svc:5000/openshift/tomcat:8
