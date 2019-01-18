@@ -34,7 +34,7 @@ spec:
 #                - another-node-label-value
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-            labelSelector:
+          - labelSelector:
             - matchExpressions:
               - key: app
                 operator: In
