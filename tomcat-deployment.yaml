@@ -43,7 +43,7 @@ spec:
             topologyKey: kubernetes.io/hostname
       containers:
       - name: tomcat
-        image: docker-registry.default.svc:5000/openshift/tomcat:8
+        image: docker-registry.default.svc:5000/openshift/tomcat:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
